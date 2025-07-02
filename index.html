@@ -417,7 +417,7 @@
       <div class="checklist-grid" id="checklist"></div>
 
       <div class="button-container">
-        <button class="btn-submit" onclick="enviarChecklist(this)">
+        <button class="btn-submit" onclick="enviarChecklist()">
           📤 Enviar Checklist
         </button>
         <button class="btn-clear" onclick="limparChecklist()">
@@ -465,10 +465,10 @@
       // Adicionar evento de clique no div
       div.addEventListener('click', function(e) {
         if (e.target.type !== 'checkbox') {
-          const checkbox = this.querySelector('input[type="checkbox"]');
+          const checkbox = .querySelector('input[type="checkbox"]');
           checkbox.checked = !checkbox.checked;
           updateProgress();
-          updateItemStyle(this, checkbox.checked);
+          updateItemStyle(, checkbox.checked);
         }
       });
       
@@ -544,7 +544,7 @@
     // IMPORTANTE: Substitua pela URL do seu Google Apps Script
     const endpoint = 'https://script.google.com/macros/s/AKfycbxdBxhTOXzFSurWLi8hELboxvC5URdoFGgGj-1TAIQkGUwimCWqUReaEaQBqOJidSPTLA/exec';
     
-    function enviarChecklist(this) {
+    function enviarChecklist() {
       const analista = document.getElementById('analista').value.trim();
       const ticket = document.getElementById('ticket').value.trim();
 
@@ -636,7 +636,7 @@
 
     // Validação apenas numérica para o campo RE
     document.getElementById('analista').addEventListener('input', function(e) {
-      this.value = this.value.replace(/[^0-9]/g, '');
+      .value = .value.replace(/[^0-9]/g, '');
     });
   </script>
 </body>
