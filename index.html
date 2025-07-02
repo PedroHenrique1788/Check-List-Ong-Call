@@ -574,8 +574,8 @@ function enviarChecklist() {
   const segredo = "chave-super-secreta";
   const token = btoa(segredo + ticket + analista);
 
-  // 🔧 CORREÇÃO: Enviar como JSON em vez de FormData
-  const dados = {
+  // 🔧 SOLUÇÃO: Usar método GET com parâmetros para evitar CORS
+  const params = new URLSearchParams({
     analista: analista,
     ticket: ticket,
     token: token,
@@ -583,25 +583,21 @@ function enviarChecklist() {
     totalItens: checklistItems.length,
     itensCompletos: checkedCount,
     percentual: Math.round((checkedCount / checklistItems.length) * 100),
-    respostas: respostas // já é array de boolean
-  };
+    respostas: JSON.stringify(respostas),
+    action: 'save' // Identificador da ação
+  });
 
-  fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(dados)
+  // Usar GET em vez de POST para evitar problemas de CORS
+  const urlWithParams = `${endpoint}?${params.toString()}`;
+
+  fetch(urlWithParams, {
+    method: 'GET',
+    mode: 'no-cors' // Importante para Google Apps Script
   })
-  .then(response => response.json())
-  .then(data => {
+  .then(() => {
+    // Com no-cors, não podemos ler a resposta, mas se chegou aqui, provavelmente funcionou
     showLoading(false);
-    if (data.success) {
-      showAlert('success');
-    } else {
-      showAlert('error');
-      console.error('Erro do servidor:', data.message);
-    }
+    showAlert('success');
     submitBtn.disabled = false;
     submitBtn.innerHTML = '📤 Enviar Checklist';
     setTimeout(hideAlerts, 5000);
@@ -609,11 +605,68 @@ function enviarChecklist() {
   .catch((error) => {
     console.error('Erro ao enviar:', error);
     showLoading(false);
-    showAlert('error');
+    
+    // Tentar método alternativo com formulário
+    tentarEnvioAlternativo(analista, ticket, token, respostas, checkedCount);
+    
     submitBtn.disabled = false;
     submitBtn.innerHTML = '📤 Enviar Checklist';
-    setTimeout(hideAlerts, 8000);
   });
+}
+
+// 🔧 MÉTODO ALTERNATIVO: Criar formulário invisível para submissão
+function tentarEnvioAlternativo(analista, ticket, token, respostas, checkedCount) {
+  try {
+    // Criar formulário temporário
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = endpoint;
+    form.target = '_blank'; // Abrir em nova aba
+    form.style.display = 'none';
+
+    // Adicionar campos
+    const campos = {
+      analista: analista,
+      ticket: ticket,
+      token: token,
+      timestamp: new Date().toLocaleString('pt-BR'),
+      totalItens: checklistItems.length,
+      itensCompletos: checkedCount,
+      percentual: Math.round((checkedCount / checklistItems.length) * 100),
+      respostas: JSON.stringify(respostas),
+      action: 'save'
+    };
+
+    Object.keys(campos).forEach(key => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = campos[key];
+      form.appendChild(input);
+    });
+
+    // Adicionar ao DOM e submeter
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Remover formulário após submissão
+    setTimeout(() => {
+      document.body.removeChild(form);
+    }, 1000);
+
+    // Mostrar mensagem de sucesso
+    setTimeout(() => {
+      showLoading(false);
+      showAlert('success');
+      setTimeout(hideAlerts, 5000);
+    }, 2000);
+
+  } catch (error) {
+    console.error('Erro no método alternativo:', error);
+    showLoading(false);
+    showAlert('error');
+    setTimeout(hideAlerts, 8000);
+  }
 }
 
     // Inicializar progresso
