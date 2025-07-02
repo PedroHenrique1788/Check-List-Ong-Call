@@ -465,10 +465,10 @@
       // Adicionar evento de clique no div
       div.addEventListener('click', function(e) {
         if (e.target.type !== 'checkbox') {
-          const checkbox = .querySelector('input[type="checkbox"]');
+          const checkbox = this.querySelector('input[type="checkbox"]');
           checkbox.checked = !checkbox.checked;
           updateProgress();
-          updateItemStyle(, checkbox.checked);
+          updateItemStyle(this, checkbox.checked);
         }
       });
       
@@ -636,7 +636,7 @@
 
     // Validação apenas numérica para o campo RE
     document.getElementById('analista').addEventListener('input', function(e) {
-      .value = .value.replace(/[^0-9]/g, '');
+      this.value = this.value.replace(/[^0-9]/g, '');
     });
   </script>
 </body>
