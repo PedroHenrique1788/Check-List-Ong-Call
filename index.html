@@ -417,7 +417,7 @@
       <div class="checklist-grid" id="checklist"></div>
 
       <div class="button-container">
-        <button class="btn-submit" onclick="enviarChecklist()">
+        <button class="btn-submit" onclick="enviarChecklist(this)">
           📤 Enviar Checklist
         </button>
         <button class="btn-clear" onclick="limparChecklist()">
@@ -544,7 +544,7 @@
     // IMPORTANTE: Substitua pela URL do seu Google Apps Script
     const endpoint = 'https://script.google.com/macros/s/AKfycbxdBxhTOXzFSurWLi8hELboxvC5URdoFGgGj-1TAIQkGUwimCWqUReaEaQBqOJidSPTLA/exec';
     
-    function enviarChecklist() {
+    function enviarChecklist(this) {
       const analista = document.getElementById('analista').value.trim();
       const ticket = document.getElementById('ticket').value.trim();
 
