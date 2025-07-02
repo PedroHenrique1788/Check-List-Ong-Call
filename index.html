@@ -504,7 +504,7 @@
   <script>
     // Listas de checklist para cada tipo
     const checklistItems = {
-      call: [
+      Chat: [
         "1 - Atender o cliente em até 30 segundos",
         "2 - Dar boas vindas ao cliente usando mensagem padrão",
         "3 - Realizar a confirmação positiva solicitando 3 primeiros dígitos do CPF + Nome completo",
@@ -520,7 +520,7 @@
         "13 - Ao final da tratativa realizar um breve resumo dos pontos tratados na ligação e questionar se o cliente possui alguma dúvida e se pode ajudar em algo mais",
         "14 - Oferecer a pesquisa em 100% dos atendimentos"
       ],
-      chat: [
+      Call: [
         "1 - Atender o cliente em até 05 segundos",
         "2 - Dar boas vindas ao cliente usando mensagem padrão",
         "3 - Use a fraseologia de call back",
@@ -658,7 +658,7 @@
     }
 
     // URL do Google Apps Script
-    const endpoint = 'https://script.google.com/macros/s/AKfycbzMNiUdciMvb6JLJ3hpl5rTNF-Tqy6DXcrmK55mkN9dZ__KL9PJN3lB_CiW2DRu1N7L1g/exec';
+    const endpoint = 'https://script.google.com/macros/s/AKfycbzN6WMUnSNPu2kdt9pGBMg10V40Dpd_okcHNnEQp6Lrls9KlQeGzMeGj1BuAvAA9Nsd/exec';
     
     function enviarChecklist() {
       const analista = document.getElementById('analista').value.trim();
