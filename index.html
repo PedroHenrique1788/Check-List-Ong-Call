@@ -544,79 +544,68 @@
     // IMPORTANTE: Substitua pela URL do seu Google Apps Script
     const endpoint = 'https://script.google.com/macros/s/AKfycbxdBxhTOXzFSurWLi8hELboxvC5URdoFGgGj-1TAIQkGUwimCWqUReaEaQBqOJidSPTLA/exec';
     
-    function enviarChecklist() {
-      const analista = document.getElementById('analista').value.trim();
-      const ticket = document.getElementById('ticket').value.trim();
+     function enviarChecklist() {
+    const analista = document.getElementById('analista').value.trim();
+    const ticket = document.getElementById('ticket').value.trim();
 
-      if (!analista || !ticket) {
-        alert("⚠️ Por favor, preencha o RE e o ticket de atendimento.");
-        return;
-      }
-
-      const respostas = checklistItems.map((_, index) => 
-        document.getElementById(`check${index}`).checked
-      );
-
-      const checkedCount = respostas.filter(Boolean).length;
-      if (checkedCount === 0) {
-        alert("⚠️ Por favor, marque pelo menos um item do checklist.");
-        return;
-      }
-
-      hideAlerts();
-      showLoading(true);
-
-      // Desabilitar botão durante envio
-      const submitBtn = document.querySelector('.btn-submit');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '⏳ Enviando...';
-
-      const segredo = "chave-super-secreta";
-      const token = btoa(segredo + ticket + analista);
-
-      const payload = {
-        analista: analista,
-        ticket: ticket,
-        respostas: respostas,
-        token: token,
-        timestamp: new Date().toLocaleString('pt-BR'),
-        totalItens: checklistItems.length,
-        itensCompletos: checkedCount,
-        percentual: Math.round((checkedCount / checklistItems.length) * 100)
-      };
-
-      fetch(endpoint, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        showLoading(false);
-        showAlert('success');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '📤 Enviar Checklist';
-        
-        // Auto-esconder alerta de sucesso após 5 segundos
-        setTimeout(() => {
-          hideAlerts();
-        }, 5000);
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar:', error);
-        showLoading(false);
-        showAlert('error');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '📤 Enviar Checklist';
-        
-        // Auto-esconder alerta de erro após 8 segundos
-        setTimeout(() => {
-          hideAlerts();
-        }, 8000);
-      });
+    if (!analista || !ticket) {
+      alert("⚠️ Por favor, preencha o RE e o ticket de atendimento.");
+      return;
     }
+
+    const respostas = checklistItems.map((_, index) =>
+      document.getElementById(`check${index}`).checked
+    );
+
+    const checkedCount = respostas.filter(Boolean).length;
+    if (checkedCount === 0) {
+      alert("⚠️ Por favor, marque pelo menos um item do checklist.");
+      return;
+    }
+
+    hideAlerts();
+    showLoading(true);
+
+    // Desabilitar botão durante envio
+    const submitBtn = document.querySelector('.btn-submit');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ Enviando...';
+
+    const segredo = "chave-super-secreta";
+    const token = btoa(segredo + ticket + analista);
+
+    // 🔁 Usar FormData para evitar CORS
+    const formData = new FormData();
+    formData.append('analista', analista);
+    formData.append('ticket', ticket);
+    formData.append('token', token);
+    formData.append('timestamp', new Date().toLocaleString('pt-BR'));
+    formData.append('totalItens', checklistItems.length);
+    formData.append('itensCompletos', checkedCount);
+    formData.append('percentual', Math.round((checkedCount / checklistItems.length) * 100));
+    formData.append('respostas', JSON.stringify(respostas)); // envia como string
+
+    fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    })
+    .then(() => {
+      showLoading(false);
+      showAlert('success');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '📤 Enviar Checklist';
+      setTimeout(hideAlerts, 5000);
+    })
+    .catch((error) => {
+      console.error('Erro ao enviar:', error);
+      showLoading(false);
+      showAlert('error');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '📤 Enviar Checklist';
+      setTimeout(hideAlerts, 8000);
+    });
+  }
 
     // Inicializar progresso
     updateProgress();
