@@ -408,8 +408,8 @@
             <span class="progress-text" id="progressText">0%</span>
           </div>
           <div class="progress-stats">
-            <span>Concluído: <span class="number" id="completedCount">0</span> de <span class="number" id="totalCount">17</span></span>
-            <span>Restam: <span class="number" id="remainingCount">17</span> itens</span>
+            <span>Concluído: <span class="number" id="completedCount">0</span> de <span class="number" id="totalCount">14</span></span>
+            <span>Restam: <span class="number" id="remainingCount">14</span> itens</span>
           </div>
         </div>
       </div>
@@ -435,18 +435,18 @@
     const checklistItems = [
       "1 - Atender o cliente em até 30 segundos",
       "2 - Dar boas vindas ao cliente usando mensagem padrão",
-      "3 - Realize a confirmação positiva solicitando 3 primeiros dígitos do CPF + Nome completo",
+      "3 - Realizar a confirmação positiva solicitando 3 primeiros dígitos do CPF + Nome completo",
       "4 - Identificar e analisar o cadastro do cliente e registros anteriores para identificar se cliente já fez sua solicitação",
-      "5 - Realize o tagueamento e registro no CRM para 100% dos contatos",
+      "5 - Realizar o tagueamento e registro no CRM para 100% dos contatos",
       "6 - Em caso de recebimento de transferências de outra jornada, lembrar de alterar a TAG",
-      "7 - Confirme o endereço do imóvel sobre o qual o cliente quer falar",
-      "8 - Retorne com o cliente de tempos de tempos para manter a atualização, ficando sem retonar no maximo até 2 minutos",
-      "9 - Nos casos em que a solicitação do cliente puder ser atendida via app ou site QuintoAndar, direcionar o cliente ao APP ou site e orienta-lo com base nos processo",
-      "10 - Identificado a necessidade de transferencia para outra jornada, utilize a calculadora disponibilizada na Base de Conhecimento",
-      "11 - Ao retornar para o cliente, agradeça por ter aguardado e recaptule o atendimento",
-      "12 - Demonstre cordialidade e interesse em atender o cliente, se atente nas escolhas das palavras ao digitar buscando garantir um atendimento humano e acolhedor",
-      "13 - Ao final da tratativa relize um breve resumo dos pontos tratados na ligação e questione se o cliente possui alguma duvida e se pode ajudar em algo mais.",
-      "14 - Oferte a pesquisa em 100% dos atendimentos",
+      "7 - Confirmar o endereço do imóvel sobre o qual o cliente quer falar",
+      "8 - Retornar com o cliente de tempos em tempos para manter a atualização, ficando sem retornar no máximo até 2 minutos",
+      "9 - Nos casos em que a solicitação do cliente puder ser atendida via app ou site QuintoAndar, direcionar o cliente ao APP ou site e orientá-lo com base nos processos",
+      "10 - Identificada a necessidade de transferência para outra jornada, utilizar a calculadora disponibilizada na Base de Conhecimento",
+      "11 - Ao retornar para o cliente, agradecer por ter aguardado e recapitular o atendimento",
+      "12 - Demonstrar cordialidade e interesse em atender o cliente, se atentar nas escolhas das palavras ao digitar buscando garantir um atendimento humano e acolhedor",
+      "13 - Ao final da tratativa realizar um breve resumo dos pontos tratados na ligação e questionar se o cliente possui alguma dúvida e se pode ajudar em algo mais",
+      "14 - Oferecer a pesquisa em 100% dos atendimentos"
     ];
 
     const checklistContainer = document.getElementById('checklist');
@@ -493,6 +493,7 @@
       document.getElementById('progressText').textContent = percentage + '%';
       document.getElementById('completedCount').textContent = checkedCount;
       document.getElementById('remainingCount').textContent = totalCount - checkedCount;
+      document.getElementById('totalCount').textContent = totalCount;
 
       // Atualizar círculo de progresso
       const progressCircle = document.getElementById('progressCircle');
@@ -516,7 +517,7 @@
       });
     
       // Limpar os campos de texto
-      const textInputs = document.querySelectorAll('input[type="text"]');
+      const textInputs = document.querySelectorAll('input[type="text"], input[type="number"]');
       textInputs.forEach(input => {
         input.value = '';
       });
@@ -525,7 +526,6 @@
       updateProgress();
       hideAlerts();
     }
-
 
     function hideAlerts() {
       document.getElementById('successAlert').style.display = 'none';
@@ -540,7 +540,10 @@
       const alertElement = document.getElementById(type + 'Alert');
       alertElement.style.display = show ? 'block' : 'none';
     }
-    const endpoint = 'https://script.google.com/macros/s/AKfycbxdBxhTOXzFSurWLi8hELboxvC5URdoFGgGj-1TAIQkGUwimCWqUReaEaQBqOJidSPTLA/exec';
+
+    // IMPORTANTE: Substitua pela URL do seu Google Apps Script
+    const endpoint = 'https://script.google.com/macros/s/SEU_SCRIPT_ID_AQUI/exec';
+    
     function enviarChecklist() {
       const analista = document.getElementById('analista').value.trim();
       const ticket = document.getElementById('ticket').value.trim();
@@ -582,31 +585,38 @@
         percentual: Math.round((checkedCount / checklistItems.length) * 100)
       };
 
-
-      
-  fetch(endpoint, {
-  method: 'POST',
-  mode: 'no-cors',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(payload)
-})
-.then(() => {
-  showLoading(false);
-  showAlert('success');
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = '📤 Enviar Checklist';
-})
-.catch((error) => {
-  console.error('Erro ao enviar:', error);
-  showLoading(false);
-  showAlert('error');
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = '📤 Enviar Checklist';
-});
+      fetch(endpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        showLoading(false);
+        showAlert('success');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '📤 Enviar Checklist';
+        
+        // Auto-esconder alerta de sucesso após 5 segundos
+        setTimeout(() => {
+          hideAlerts();
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar:', error);
+        showLoading(false);
+        showAlert('error');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '📤 Enviar Checklist';
+        
+        // Auto-esconder alerta de erro após 8 segundos
+        setTimeout(() => {
+          hideAlerts();
+        }, 8000);
+      });
     }
-    
 
     // Inicializar progresso
     updateProgress();
@@ -622,6 +632,11 @@
       if (e.key === 'Enter') {
         enviarChecklist();
       }
+    });
+
+    // Validação apenas numérica para o campo RE
+    document.getElementById('analista').addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '');
     });
   </script>
 </body>
