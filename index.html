@@ -504,44 +504,43 @@
   <script>
     // Listas de checklist para cada tipo
     const checklistItems = {
-      chat: [
-        "1 - Atender o cliente em até 30 segundos",
-        "2 - Dar boas vindas ao cliente usando mensagem padrão",
-        "3 - Realizar a confirmação positiva solicitando 3 primeiros dígitos do CPF + Nome completo",
-        "4 - Identificar e analisar o cadastro do cliente e registros anteriores para identificar se cliente já fez sua solicitação",
-        "5 - Realizar o tagueamento e registro no CRM para 100% dos contatos",
-        "6 - Em caso de recebimento de transferências de outra jornada, lembrar de alterar a TAG",
-        "7 - Confirmar o endereço do imóvel sobre o qual o cliente quer falar",
-        "8 - Retornar com o cliente de tempos em tempos para manter a atualização, ficando sem retornar no máximo até 2 minutos",
-        "9 - Nos casos em que a solicitação do cliente puder ser atendida via app ou site QuintoAndar, direcionar o cliente ao APP ou site e orientá-lo com base nos processos",
-        "10 - Identificada a necessidade de transferência para outra jornada, utilizar a calculadora disponibilizada na Base de Conhecimento",
-        "11 - Ao retornar para o cliente, agradecer por ter aguardado e recapitular o atendimento",
-        "12 - Demonstrar cordialidade e interesse em atender o cliente, se atentar nas escolhas das palavras ao digitar buscando garantir um atendimento humano e acolhedor",
-        "13 - Ao final da tratativa realizar um breve resumo dos pontos tratados na ligação e questionar se o cliente possui alguma dúvida e se pode ajudar em algo mais",
-        "14 - Oferecer a pesquisa em 100% dos atendimentos"
-      ],
-      call: [
-        "1 - Atender o cliente em até 05 segundos",
-        "2 - Dar boas vindas ao cliente usando mensagem padrão",
-        "3 - Use a fraseologia de call back",
-        "4 - Questione o motivo de contato para entender a real necessidade do cliente",
-        "5 - Realize a confirmação positiva solicitando 3 primeiros dígitos do CPF + Nome completo",
-        "6 - Identificar e analisar o cadastro do cliente",
-        "7 - Realize o tagueamento e registro no CRM para 100% dos contatos",
-        "8 - Confirme o endereço do imóvel sobre o qual o cliente quer falar",
-        "9 - Nos casos em que a solicitação do cliente puder ser atendida via app ou site QuintoAndar, direcionar o cliente ao APP ou site e orienta-lo com base nos processo",
-        "10 - Identificado a necessidade de transferencia para outra jornada, utilize a calculadora disponibilizada na Base de Conhecimento",
-        "11 - Realize o tagueamento para 100% dos contatos",
-        "12 - Use o mute com consciência, durante analise no sistema, ou busca de informação o mute não devrá ser usado",
-        "13 - Retorne com o cliente de tempos de tempos para manter a atualização, ficando sem retonar no maximo até 3 minutos",
-        "14 - Ao retornar, agradeça e recapitule o atendimento",
-        "15 - Demonstre cordialidade e interesse",
-        "16 - Garanta o registro no CRM de 100% dos contatos",
-        "17 - Ao final da tratativa relize um breve resumo dos pontos tratados na ligação e questione se o cliente possui alguma duvida e se pode ajudar em algo mais.",
-        "18 - Oferte a pesquisa em 100% dos atendimentos"
-      ]
-    };
-
+  chat: [
+    "1 - Atender o cliente em até 30 segundos.",
+    "2 - Dar boas-vindas ao cliente usando mensagem padrão.",
+    "3 - Realizar a confirmação positiva solicitando os 3 primeiros dígitos do CPF e o nome completo.",
+    "4 - Identificar e analisar o cadastro do cliente e registros anteriores para verificar se o cliente já fez sua solicitação.",
+    "5 - Realizar o tagueamento e registro no CRM para 100% dos contatos.",
+    "6 - Em caso de recebimento de transferências de outra jornada, lembrar de alterar a TAG.",
+    "7 - Confirmar o endereço do imóvel sobre o qual o cliente quer falar.",
+    "8 - Retornar ao cliente de tempos em tempos para manter a atualização, sem deixar de retornar no máximo até 2 minutos.",
+    "9 - Nos casos em que a solicitação do cliente puder ser atendida via app ou site QuintoAndar, direcionar o cliente ao app ou site e orientá-lo com base nos processos.",
+    "10 - Identificada a necessidade de transferência para outra jornada, utilizar a calculadora disponibilizada na Base de Conhecimento.",
+    "11 - Ao retornar ao cliente, agradecer por ter aguardado e recapitular o atendimento.",
+    "12 - Demonstrar cordialidade e interesse em atender o cliente, atentando-se às escolhas das palavras ao digitar, buscando garantir um atendimento humano e acolhedor.",
+    "13 - Ao final da tratativa, realizar um breve resumo dos pontos tratados na ligação e questionar se o cliente possui alguma dúvida e se pode ajudar em algo mais.",
+    "14 - Oferecer a pesquisa em 100% dos atendimentos."
+  ],
+  call: [
+    "1 - Atender o cliente em até 5 segundos.",
+    "2 - Dar boas-vindas ao cliente usando mensagem padrão.",
+    "3 - Usar a fraseologia de call back.",
+    "4 - Questionar o motivo de contato para entender a real necessidade do cliente.",
+    "5 - Realizar a confirmação positiva solicitando os 3 primeiros dígitos do CPF e o nome completo.",
+    "6 - Identificar e analisar o cadastro do cliente.",
+    "7 - Realizar o tagueamento e registro no CRM para 100% dos contatos.",
+    "8 - Confirmar o endereço do imóvel sobre o qual o cliente quer falar.",
+    "9 - Nos casos em que a solicitação do cliente puder ser atendida via app ou site QuintoAndar, direcionar o cliente ao app ou site e orientá-lo com base nos processos.",
+    "10 - Identificada a necessidade de transferência para outra jornada, utilizar a calculadora disponibilizada na Base de Conhecimento.",
+    "11 - Realizar o tagueamento para 100% dos contatos.",
+    "12 - Usar o mute com consciência; durante a análise no sistema ou busca de informação, o mute não deverá ser usado.",
+    "13 - Retornar ao cliente de tempos em tempos para manter a atualização, sem deixar de retornar no máximo até 3 minutos.",
+    "14 - Ao retornar, agradeça e recapitule o atendimento.",
+    "15 - Demonstrar cordialidade e interesse.",
+    "16 - Garantir o registro no CRM de 100% dos contatos.",
+    "17 - Ao final da tratativa, realizar um breve resumo dos pontos tratados na ligação e questionar se o cliente possui alguma dúvida e se pode ajudar em algo mais.",
+    "18 - Oferecer a pesquisa em 100% dos atendimentos."
+  ]
+};
     let currentType = 'chat'; // Tipo padrão
     const checklistContainer = document.getElementById('checklist');
 
